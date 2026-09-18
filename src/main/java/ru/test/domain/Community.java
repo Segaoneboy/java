@@ -2,23 +2,22 @@ package ru.test.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Community{
-    private UUID id;
+    private int id;
     private String name;
     private List<Connections> followersList = new ArrayList<>();
     private Profile admin;
 
     public Community(){
     }
-    public Community(UUID id, String name, List<Connections> followersList, Profile admin){
+    public Community(int id, String name, List<Connections> followersList, Profile admin){
         this.id = id;
         this.name = name;
         this.followersList = followersList;
         this.admin = admin;
     }
-    public UUID getId(){
+    public int getId(){
         return this.id;
     }
     public String getName(){
@@ -31,7 +30,7 @@ public class Community{
         return this.admin;
     }
 
-    public void setId(UUID id){
+    public void setId(int id){
         this.id = id;
     }
     public void setName(String name){

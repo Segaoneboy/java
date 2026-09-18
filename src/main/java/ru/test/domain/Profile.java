@@ -2,10 +2,9 @@ package ru.test.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Profile {
-    private UUID id;
+    private int id;
     private String name;
     private String city;
     private int birthYear;
@@ -13,14 +12,14 @@ public class Profile {
 
     public Profile(){}
 
-    public Profile(UUID id, String name, String city, int birthYear, List<Connections> friendshipList){
+    public Profile(int id, String name, String city, int birthYear, List<Connections> friendshipList){
         this.id = id;
         this.name = name;
         this.city = city;
         this.birthYear = birthYear;
         this.friendshipList = friendshipList;
     }
-    public UUID getId(){
+    public int getId(){
         return this.id;
     }
     public String getName(){
@@ -36,7 +35,7 @@ public class Profile {
         return this.friendshipList;
     }
 
-    public void setId(UUID id){
+    public void setId(int id){
         this.id = id;
     }
     public void setName(String name){

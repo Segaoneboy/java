@@ -1,25 +1,24 @@
 package ru.test.domain;
 
-import java.util.UUID;
 
 public class Connections {
-    private UUID friendId;
+    private int friendId;
     private int connection;
 
     public Connections(){
     }
-    public Connections(UUID friendId, int connection ){
+    public Connections(int friendId, int connection ){
         this.friendId = friendId;
         this.connection = connection;
     }
-    public UUID getFriendId(){
+    public int getFriendId(){
         return friendId;
     }
     public int getConnection(){
         return connection;
     }
 
-    public void setId(UUID friendId){
+    public void setId(int friendId){
         this.friendId = friendId;
     }
     public void setConnection(int connection){
