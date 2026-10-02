@@ -19,20 +19,4 @@ public class CsvParserException extends Exception{
         return lineNumber;
     }
 
-    public String getUserMsg(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Код ошибки: ").append(errorCode.name()).append("\n");
-        sb.append("Описание: ").append(errorCode.getDefaultMessage()).append("\n");
-
-        if(lineNumber > 0){
-            sb.append("Строка в файле: ").append(lineNumber).append("\n");
-        }
-        if(getMessage() != null && !getMessage().isBlank()){
-            sb.append("Детали: ").append(getMessage());
-        }
-        return sb.toString();
-    }
-
-    public void getLinenumber() {
-    }
 }

@@ -26,9 +26,6 @@ public class DataManager {
             profiles.add(profile);
         }
     }
-    public void removeProfile(Profile profile){
-        profiles.remove(profile);
-    }
 
     public int generateId(){
         return profiles.stream()
