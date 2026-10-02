@@ -12,10 +12,10 @@ public class Connections {
         this.connection = connection;
     }
     public int getFriendId(){
-        return friendId;
+        return this.friendId;
     }
     public int getConnection(){
-        return connection;
+        return this.connection;
     }
 
     public void setId(int friendId){

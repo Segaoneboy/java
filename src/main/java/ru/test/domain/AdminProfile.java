@@ -28,7 +28,7 @@ public class AdminProfile extends Profile implements Editable {
         map.put("Имя", getName());
         map.put("Город", getCity());
         map.put("Год рождения", String.valueOf(getBirthYear()));
-        map.put("Группы (через запятую)", String.join(", ", groups));
+        map.put("Группы", String.join(", ", groups));
         return map;
     }
 
@@ -42,7 +42,7 @@ public class AdminProfile extends Profile implements Editable {
         } catch (NumberFormatException ignored) {}
 
         List<String> newGroups = new ArrayList<>();
-        String rawGroups = fields.get("Группы (через запятую)");
+        String rawGroups = fields.get("Группы");
         if (rawGroups != null && !rawGroups.isBlank()) {
             for (String g : rawGroups.split(",")) {
                 newGroups.add(g.trim());

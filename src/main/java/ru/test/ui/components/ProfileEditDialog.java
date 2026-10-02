@@ -1,4 +1,4 @@
-package ru.test.ui;
+package ru.test.ui.components;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -21,7 +21,6 @@ public class ProfileEditDialog extends Dialog<Boolean> {
         grid.setVgap(10);
         grid.setPadding(new Insets(20));
 
-        // Берем карту полей
         Map<String, String> initialData = editable.getEditableFields();
         Map<String, TextField> textFields = new HashMap<>();
 
@@ -39,7 +38,6 @@ public class ProfileEditDialog extends Dialog<Boolean> {
 
         getDialogPane().setContent(grid);
 
-        // При клике на Сохранить собираем новые данные из TextField и передаем в объект
         setResultConverter(button -> {
             if (button == saveButton) {
                 Map<String, String> updatedData = new HashMap<>();

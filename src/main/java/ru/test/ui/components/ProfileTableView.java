@@ -1,4 +1,4 @@
-package ru.test.ui;
+package ru.test.ui.components;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
