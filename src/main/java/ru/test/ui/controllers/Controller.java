@@ -151,7 +151,8 @@ public class Controller {
     }
 
     public void handleAddProfile(){
-        AdminProfile newAdmin = new AdminProfile(0,"","",2000, new ArrayList<>(), new ArrayList<>());
+        int newId = dataManager.generateId();
+        AdminProfile newAdmin = new AdminProfile(newId,"","",2000, new ArrayList<>(), new ArrayList<>());
 
         boolean created = ProfileEditDialog.showEditDialog(newAdmin);
         if(created){

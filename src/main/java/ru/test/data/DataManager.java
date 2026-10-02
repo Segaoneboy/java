@@ -29,4 +29,11 @@ public class DataManager {
     public void removeProfile(Profile profile){
         profiles.remove(profile);
     }
+
+    public int generateId(){
+        return profiles.stream()
+                .mapToInt(Profile::getId)
+                .max()
+                .orElse(0)+1;
+    }
 }
