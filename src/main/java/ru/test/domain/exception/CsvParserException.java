@@ -34,6 +34,5 @@ public class CsvParserException extends Exception{
     }
 
     public void getLinenumber() {
-
     }
 }

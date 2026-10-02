@@ -14,13 +14,15 @@ public class MainView extends BorderPane{
 
         Button loadBtn = new Button("Загрузить CSV");
         Button editBtn = new Button("Редактировать");
+        Button saveBtn = new Button("Сохранить CSV");
+        Button addProfileBtn = new Button("Создать профиль");
         editBtn.setDisable(true);
 
-        Controller controller = new Controller(tableView, editBtn, dataManager);
+        Controller controller = new Controller(tableView, editBtn,loadBtn,saveBtn,addProfileBtn, dataManager);
 
         loadBtn.setOnAction(e -> controller.handleLoadFile());
 
-        HBox topBar = new HBox(10, loadBtn, editBtn);
+        HBox topBar = new HBox(10, loadBtn, editBtn, addProfileBtn, saveBtn);
         topBar.setPadding(new Insets(10));
 
         this.setTop(topBar);
