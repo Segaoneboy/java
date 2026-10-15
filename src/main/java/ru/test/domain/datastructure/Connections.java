@@ -1,4 +1,4 @@
-package ru.test.domain;
+package ru.test.domain.datastructure;
 
 
 public class Connections {

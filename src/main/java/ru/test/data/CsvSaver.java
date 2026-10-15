@@ -1,7 +1,6 @@
 package ru.test.data;
 
 import ru.test.domain.*;
-import ru.test.domain.Profile;
 import ru.test.domain.exception.CsvParserException;
 import ru.test.domain.exception.ErrorCode;
 
@@ -21,14 +20,18 @@ public class CsvSaver {
             writer.newLine();
 
             for(Profile p : profiles){
-                String type = "USER";
+                String type = "";
                 String groups = "";
 
                 if(p instanceof AdminProfile admin){
                     type="ADMIN";
-                    groups = String.join(",", admin.getGroups());
+                    if(admin.getGroups() != null){
+                        groups = String.join(",", admin.getGroups());
+                    }
                 } else if (p instanceof DeletedProfile){
                     type = "DELETED";
+                } else if(p instanceof UserProfile){
+                    type="USER";
                 }
                 String line = String.format("%d;%s;%s;%s;%d;%s",
                         p.getId(),
@@ -44,7 +47,7 @@ public class CsvSaver {
             }
         }
         catch(IOException e){
-            throw new CsvParserException(ErrorCode.FILE_READ_ERROR, "Ошибка записи файла: "+ e.getMessage());
+            throw new CsvParserException(ErrorCode.FILE_WRITE_ERROR, "Ошибка записи файла: "+ e.getMessage());
         }
     }
 }

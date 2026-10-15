@@ -1,9 +1,11 @@
 package ru.test.ui.components;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import ru.test.domain.Editable;
+import ru.test.domain.exception.CsvParserException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,10 +13,10 @@ import java.util.Map;
 public class ProfileEditDialog extends Dialog<Boolean> {
 
     public ProfileEditDialog(Editable editable) {
-        setTitle("Редактирование профиля");
+        setTitle("Редактирование");
 
-        ButtonType saveButton = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
-        getDialogPane().getButtonTypes().addAll(saveButton, ButtonType.CANCEL);
+        ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
+        getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -38,17 +40,29 @@ public class ProfileEditDialog extends Dialog<Boolean> {
 
         getDialogPane().setContent(grid);
 
-        setResultConverter(button -> {
-            if (button == saveButton) {
-                Map<String, String> updatedData = new HashMap<>();
-                for (var entry : textFields.entrySet()) {
-                    updatedData.put(entry.getKey(), entry.getValue().getText());
-                }
-                editable.update(updatedData);
-                return true;
+        Button saveButton  = (Button) getDialogPane().lookupButton(saveButtonType);
+
+        saveButton.addEventFilter(ActionEvent.ACTION, event ->{
+            Map<String, String> updateData = new HashMap<>();
+            for(var entry : textFields.entrySet()){
+                updateData.put(entry.getKey(),entry.getValue().getText());
             }
-            return false;
+            try{
+                editable.update(updateData);
+            }catch (CsvParserException e){
+                event.consume();
+
+                showErrorAlert(e);
+            }
         });
+        setResultConverter(button -> button == saveButtonType);
+    }
+    private void showErrorAlert(CsvParserException e){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка ввода");
+        alert.setHeaderText(e.getErrorCode().getDefaultMessage());
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
     }
 
     public static boolean showEditDialog(Editable editable) {

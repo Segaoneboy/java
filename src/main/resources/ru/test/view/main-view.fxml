@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.test.ui.controllers.MainController"
+            prefWidth="1050.0" prefHeight="650.0">
+
+    <top>
+        <fx:include fx:id="toolbar" source="toolbar-view.fxml"/>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.45">
+            <fx:include fx:id="table" source="table-view.fxml"/>
+            <fx:include fx:id="graphView" source="graph-view.fxml"/>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <fx:include fx:id="status" source="status-view.fxml"/>
+    </bottom>
+
+</BorderPane>

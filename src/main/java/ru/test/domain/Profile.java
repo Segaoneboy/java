@@ -1,56 +1,84 @@
 package ru.test.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import ru.test.domain.datastructure.Connections;
 
 public class Profile {
     private int id;
     private String name;
     private String city;
     private int birthYear;
-    private List<Connections> friendshipList = new ArrayList<>();
+    private Connections[] friendshipList;
+    private int friendshipCount;
 
-    public Profile(){}
+    public Profile() {
+        this.friendshipList = new Connections[4];
+        this.friendshipCount = 0;
+    }
 
-    public Profile(int id, String name, String city, int birthYear, List<Connections> friendshipList){
+    public Profile(int id, String name, String city, int birthYear, Connections[] friendshipList) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.birthYear = birthYear;
+        if (friendshipList != null) {
+            this.friendshipList = friendshipList;
+            this.friendshipCount = friendshipList.length;
+        } else {
+            this.friendshipList = new Connections[4];
+            this.friendshipCount = 0;
+        }
+    }
+
+    public void addFriendship(int friendId, int strength) {
+        if (friendshipList == null) {
+            friendshipList = new Connections[4];
+            friendshipCount = 0;
+        }
+
+        for (int i = 0; i < friendshipCount; i++) {
+            if (friendshipList[i] != null && friendshipList[i].getFriendId() == friendId) {
+                friendshipList[i].setConnection(strength);
+                return;
+            }
+        }
+
+        // Если массив заполнен (или его длина была 0):
+        if (friendshipCount >= friendshipList.length) {
+            int newCapacity = (friendshipList.length == 0) ? 4 : friendshipList.length * 2;
+            Connections[] newArr = new Connections[newCapacity];
+            System.arraycopy(friendshipList, 0, newArr, 0, friendshipCount);
+            friendshipList = newArr;
+        }
+
+        friendshipList[friendshipCount++] = new Connections(friendId, strength);
+    }
+    public boolean removeFriendship(int friendId) {
+        for (int i = 0; i < friendshipCount; i++) {
+            if (friendshipList[i].getFriendId() == friendId) {
+                int moved = friendshipCount - i - 1;
+                if (moved > 0) {
+                    System.arraycopy(friendshipList, i + 1, friendshipList, i, moved);
+                }
+                friendshipList[--friendshipCount] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getId() { return this.id; }
+    public String getName() { return this.name; }
+    public String getCity() { return this.city; }
+    public int getBirthYear() { return this.birthYear; }
+    public Connections[] getFriendshipList() { return this.friendshipList; }
+    public int getFriendshipCount() { return this.friendshipCount; }
+
+    public void setId(int id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setCity(String city) { this.city = city; }
+    public void setBirthYear(int birthYear) { this.birthYear = birthYear; }
+    public void setFriendshipList(Connections[] friendshipList) {
         this.friendshipList = friendshipList;
+        this.friendshipCount = (friendshipList != null) ? friendshipList.length : 0;
     }
-    public int getId(){
-        return this.id;
-    }
-    public String getName(){
-        return this.name;
-    }
-    public String getCity(){
-        return this.city;
-    }
-    public int getBirthYear(){
-        return this.birthYear;
-    }
-    public List<Connections> getFriendshipList(){
-        return this.friendshipList;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setCity(String city){
-        this.city = city;
-    }
-    public void setBirthYear(int birthYear){
-        this.birthYear = birthYear;
-    }
-    public void setFriendshipList(List<Connections> friendshipList){
-        this.friendshipList = friendshipList;
-    }
-
-
 }
-

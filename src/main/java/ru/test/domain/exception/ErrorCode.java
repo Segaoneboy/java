@@ -3,6 +3,7 @@ package ru.test.domain.exception;
 public enum ErrorCode {
     FILE_NOT_FOUND("Файл не найден"),
     FILE_READ_ERROR("Ошибка чтения файла"),
+    FILE_WRITE_ERROR("Ошибка записи файла"),
     WRONG_FIELD_COUNT("Неверное количество колонок в строке"),
     BAD_NUMBER("Ошибка формата числа (возраст, ID, и т.д)"),
     INVALID_HEADER("Неверный формат заголовка CSV файла"),

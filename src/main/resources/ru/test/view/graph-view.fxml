@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.test.ui.controllers.GraphViewController"
+      spacing="8.0">
+    <padding>
+        <Insets top="8.0" right="8.0" bottom="8.0" left="8.0"/>
+    </padding>
+
+    <HBox spacing="8.0" alignment="CENTER_LEFT">
+        <Label text="BFS путь:"/>
+        <TextField fx:id="startIdField" promptText="От ID" prefWidth="55.0"/>
+        <TextField fx:id="targetIdField" promptText="До ID" prefWidth="55.0"/>
+        <Button fx:id="findPathBtn" text="Найти" onAction="#onFindShortestPath"/>
+        <Button text="Сброс" onAction="#onResetHighlight"/>
+        <Separator orientation="VERTICAL"/>
+        <Button text="+ Добавить дружбу" onAction="#onAddFriendshipDialog"/>
+    </HBox>
+
+    <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-background-color: #f0f0f0; -fx-padding: 5; -fx-background-radius: 4;">
+        <Label fx:id="selectedUserInfoLabel" text="Выберите профиль в таблице, чтобы увидеть его связи." style="-fx-font-weight: bold;"/>
+    </HBox>
+
+    <Pane fx:id="canvasContainer" VBox.vgrow="ALWAYS" style="-fx-border-color: #cccccc; -fx-background-color: #ffffff;">
+        <Canvas fx:id="graphCanvas" width="600.0" height="450.0"/>
+    </Pane>
+</VBox>

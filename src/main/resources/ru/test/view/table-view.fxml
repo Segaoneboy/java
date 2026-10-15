@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<TableView xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="tableView"
+           fx:controller="ru.test.ui.controllers.TableController">
+    <columns>
+        <TableColumn fx:id="idCol" text="ID" prefWidth="60.0"/>
+        <TableColumn fx:id="nameCol" text="Имя" prefWidth="140.0"/>
+        <TableColumn fx:id="cityCol" text="Город" prefWidth="120.0"/>
+        <TableColumn fx:id="birthYearCol" text="Год рождения" prefWidth="100.0"/>
+        <TableColumn fx:id="typeCol" text="Тип" prefWidth="110.0"/>
+        <TableColumn fx:id="groupsCol" text="Группы / Детали" prefWidth="160.0"/>
+    </columns>
+    <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+    </columnResizePolicy>
+</TableView>

@@ -1,6 +1,7 @@
 package ru.test.data;
 
 import ru.test.domain.*;
+import ru.test.domain.datastructure.Connections;
 import ru.test.domain.exception.CsvParserException;
 import ru.test.domain.exception.ErrorCode;
 
@@ -13,7 +14,7 @@ public class CsvLoader {
     private static final String DELIMITER = ";";
     private static final String HEADER = "id;type;name;city;birthyear;groups";
 
-    public Profile parseLineToProfile(String line, int lineNumber) throws CsvParserException{
+    public Profile parseLineToProfile(String line, int lineNumber) throws CsvParserException {
         String[] tokens = line.split(DELIMITER, -1);
         if(tokens.length < 5){
             throw new CsvParserException(
@@ -58,7 +59,7 @@ public class CsvLoader {
         String city = tokens[3].trim();
         String groups = tokens.length > 5 ? tokens[5].trim() : "";
 
-        List<Connections> friendships = new ArrayList<>();
+        Connections[] friendships = new Connections[0];
 
         List<String> groupList = new ArrayList<>();
         if(!groups.isEmpty()){
@@ -72,7 +73,12 @@ public class CsvLoader {
         return switch (type){
             case "ADMIN"-> new AdminProfile(id,name,city,birthYear,friendships,groupList);
             case "DELETED"-> new DeletedProfile(id,name,city,birthYear,friendships);
-            default -> new Profile(id,name,city,birthYear,friendships);
+            case "USER"-> new UserProfile(id,name,city,birthYear,friendships);
+            default -> throw new CsvParserException(
+                    ErrorCode.INVALID_HEADER,
+                    lineNumber,
+                    "Неизвестный тип профиля: " + type
+            );
         };
 
     }
