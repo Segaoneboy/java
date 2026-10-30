@@ -1,7 +1,6 @@
 package ru.test.data;
 
 import javafx.concurrent.Task;
-import ru.test.data.DataManager;
 import ru.test.domain.*;
 import ru.test.domain.datastructure.Connections;
 import ru.test.domain.datastructure.Graph;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DataGeneratorTask extends Task<Void> {
+public class DataGeneratorTask extends Task<List<Profile>> {
 
     private final Graph graph;
     private final DataManager dataManager;
@@ -37,7 +36,7 @@ public class DataGeneratorTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected List<Profile> call() throws Exception {
         Random random = new Random();
         updateMessage("Инициализация генерации...");
         updateProgress(0, totalCount);
@@ -47,13 +46,13 @@ public class DataGeneratorTask extends Task<Void> {
         for (int i = 1; i <= totalCount; i++) {
             if (isCancelled()) {
                 updateMessage("Генерация отменена пользователем.");
-                return null;
+                return generatedProfiles;
             }
 
             int id = dataManager.generateId();
             String name = NAMES[random.nextInt(NAMES.length)] + "_" + id;
             String city = CITIES[random.nextInt(CITIES.length)];
-            int birthYear = 1975 + random.nextInt(33); // 1975–2007
+            int birthYear = 1975 + random.nextInt(33);
 
             Profile profile;
             int typeRoll = random.nextInt(10);
@@ -84,15 +83,13 @@ public class DataGeneratorTask extends Task<Void> {
                 updateMessage(String.format("Сгенерировано %d из %d записей", i, totalCount));
             }
 
-            if (totalCount <= 2000) {
+            if (totalCount <= 200) {
                 Thread.sleep(15);
             }
         }
 
-        dataManager.getProfiles().addAll(generatedProfiles);
-
         updateMessage("Генерация успешно завершена!");
         updateProgress(totalCount, totalCount);
-        return null;
+        return generatedProfiles;
     }
 }

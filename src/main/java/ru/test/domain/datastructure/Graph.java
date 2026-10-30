@@ -1,6 +1,11 @@
 package ru.test.domain.datastructure;
 
+import ru.test.data.serialization.dto.EdgeDto;
+import ru.test.data.serialization.dto.GraphDto;
 import ru.test.domain.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Graph {
@@ -16,6 +21,17 @@ public class Graph {
         this.buckets = new Vertex[cap];
         this.vertexCount = 0;
         this.totalEdges = 0;
+    }
+
+    public void clear() {
+        rwLock.writeLock().lock();
+        try {
+            this.buckets = new Vertex[Math.max(buckets.length, 16)];
+            this.vertexCount = 0;
+            this.totalEdges = 0;
+        } finally {
+            rwLock.writeLock().unlock();
+        }
     }
 
     private int getBucketIndex(int id, int capacity) {
@@ -337,6 +353,54 @@ public class Graph {
                 curr = curr.next;
             }
             return -1;
+        }
+    }
+
+    public GraphDto exportSnapshot(List<Profile> currentProfiles) {
+        rwLock.readLock().lock();
+        try {
+            List<EdgeDto> edgeList = new ArrayList<>();
+
+            for (Vertex head : buckets) {
+                Vertex curr = head;
+                while (curr != null) {
+                    int u = curr.getProfile().getId();
+                    Connections[] conns = curr.getConnections();
+                    for (int i = 0; i < curr.getConnectionCount(); i++) {
+                        int v = conns[i].getFriendId();
+                        if (u < v) {
+                            edgeList.add(new EdgeDto(u, v, conns[i].getConnection()));
+                        }
+                    }
+                    curr = curr.getNextInBucket();
+                }
+            }
+
+            return new GraphDto(1, new ArrayList<>(currentProfiles), edgeList);
+        } finally {
+            rwLock.readLock().unlock();
+        }
+    }
+
+    public void restoreFromSnapshot(GraphDto snapshot) {
+        rwLock.writeLock().lock();
+        try {
+            clear();
+            if (snapshot == null) return;
+
+            if (snapshot.getProfiles() != null) {
+                for (Profile p : snapshot.getProfiles()) {
+                    addVertex(p);
+                }
+            }
+
+            if (snapshot.getEdges() != null) {
+                for (EdgeDto edge : snapshot.getEdges()) {
+                    addEdge(edge.getFromId(), edge.getFriendId(), edge.getStrength());
+                }
+            }
+        } finally {
+            rwLock.writeLock().unlock();
         }
     }
 }

@@ -10,7 +10,7 @@ public class Connections {
     public Connections(int friendId, int connection ){
         this.friendId = friendId;
         this.connection = connection;
-    }
+    }   
     public int getFriendId(){
         return this.friendId;
     }

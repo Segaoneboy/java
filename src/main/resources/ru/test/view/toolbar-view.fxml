@@ -14,6 +14,19 @@
     <Button fx:id="loadBtn" text="Загрузить CSV" onAction="#onLoadCsv"/>
     <Button fx:id="saveBtn" text="Сохранить CSV" onAction="#onSaveCsv"/>
     <Separator orientation="VERTICAL"/>
+    <MenuButton text="Экспорт графа">
+        <items>
+            <MenuItem text="Экспорт в JSON (*.json)" onAction="#onExportJson"/>
+            <MenuItem text="Экспорт в Binary (*.bin)" onAction="#onExportBinary"/>
+        </items>
+    </MenuButton>
+
+    <MenuButton text="Импорт графа">
+        <items>
+            <MenuItem text="Импорт из JSON (*.json)" onAction="#onImportJson"/>
+            <MenuItem text="Импорт из Binary (*.bin)" onAction="#onImportBinary"/>
+        </items>
+    </MenuButton>
 
     <Button fx:id="addProfileBtn" text="Создать профиль" onAction="#onAddProfile"/>
     <Button fx:id="editBtn" text="Редактировать" onAction="#onEditProfile" disable="true"/>
